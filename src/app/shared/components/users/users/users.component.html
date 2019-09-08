@@ -1,0 +1,36 @@
+&nbsp;
+<div class='card'>
+  <div class="card-header bg-primary">Manage Users</div>
+  <div class="card-body">
+    <div *ngIf="!editFlag; else editUser">
+      <app-adduser></app-adduser>
+    </div>
+    <ng-template #editUser>
+      <app-edituser [childEditUser]= 'editUser'></app-edituser>
+    </ng-template>
+
+    <hr>
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Employee ID</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of Users">
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName}}</td>
+          <td>{{ user.employeeId}}</td>
+          <!--<td> <button class="btn btn-primary" [routerLink]="['/user/edit/', task._id]">Edit User</button>&nbsp;</td>-->
+          <td> <button class="btn btn-primary" (click)="editSelectedUser(user.userId)" >Edit User</button>&nbsp;</td>
+          <td><button class="btn btn-danger" (click)="deleteUser(user.userId)">Delete user</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer bg-primary" ></div>
+</div>
