@@ -6,10 +6,26 @@
       <app-adduser></app-adduser>
     </div>
     <ng-template #editUser>
-      <app-edituser [childEditUser]= 'editUser'></app-edituser>
+      <app-edituser [childEditUserId]='selectedUserId'></app-edituser>
     </ng-template>
-
     <hr>
+    <!--<div class="row">&nbsp;</div>
+    <div class="form-group row">
+      <div class="col-5">&nbsp;</div>
+      <input class="form-control form-control-sm mr-3 w-25" type="text" placeholder="Search" aria-label="Search"
+        [(ngModel)]="searchValue">
+      <button class="btn btn-primary mr-3" (click)="sortBy('first_name')">First Name</button>
+      <button class="btn btn-primary mr-3" (click)="sortBy('last_name')">Last Name</button>
+      <button class="btn btn-primary mr-3" (click)="sortBy('empid')">Emp ID</button>
+      
+    </div>--> 
+    <input type="text" placeholder="Search..." [(ngModel)]="userFilter">
+    <span class="ml-5 mr-2">Sort:   </span>
+    <button class="btn btn-primary mr-3" (click)="sortBy('firstName')">First Name</button>
+    <button class="btn btn-primary mr-3" (click)="sortBy('lastName')">Last Name</button>
+    <button class="btn btn-primary mr-3" (click)="sortBy('employeeId')">Emp ID</button>
+
+    <div class="row">&nbsp;</div>
     <table class="table table-responsive">
       <thead>
         <tr>
@@ -26,11 +42,11 @@
           <td>{{ user.lastName}}</td>
           <td>{{ user.employeeId}}</td>
           <!--<td> <button class="btn btn-primary" [routerLink]="['/user/edit/', task._id]">Edit User</button>&nbsp;</td>-->
-          <td> <button class="btn btn-primary" (click)="editSelectedUser(user.userId)" >Edit User</button>&nbsp;</td>
+          <td> <button class="btn btn-primary" (click)="editSelectedUser(user.userId)">Edit User</button>&nbsp;</td>
           <td><button class="btn btn-danger" (click)="deleteUser(user.userId)">Delete user</button></td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="card-footer bg-primary" ></div>
+  <div class="card-footer bg-primary"></div>
 </div>

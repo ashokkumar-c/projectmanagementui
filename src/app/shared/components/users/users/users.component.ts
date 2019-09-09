@@ -13,6 +13,9 @@ export class UsersComponent implements OnInit {
   editFlag: boolean;
   Users: User[];
   selectedUsers: User[];
+  selectedUserId: string;
+  searchValue: string;
+  sortedUsers: User[];
   public editUser: EditUser = {
     _id: '',
     firstName: '',
@@ -27,18 +30,17 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.usersService.getAllUsers().subscribe(result => {
       this.Users = result['data'] as User[];
-      this.selectedUsers = this.Users;
+      this.selectedUsers = this.Users.sort();
     });
     this.editFlag = false;
   }
 
   editSelectedUser(id: string) {
-    this.usersService.getUser(id).subscribe(result => {
+    this.selectedUserId = id;
+    this.usersService.getUser(this.selectedUserId).subscribe(result => {
       console.log(result);
       if (result['status'] === 'success') {
-        this.editUser = result['data'] as EditUser;
-        console.log('inside result');
-        console.log(this.editUser);
+        this.editUser = result['data'][0] as EditUser;
       }
     });
     this.editFlag = true;
@@ -51,6 +53,45 @@ export class UsersComponent implements OnInit {
         this.ngOnInit();
       }
     });
+  }
+
+  // Sorting functions
+  sortBy(value: string) {
+    this.sortedUsers = this.selectedUsers;
+    if (value === 'firstName') {
+      this.selectedUsers = this.sortedUsers.sort(this.sortFirstName);
+    } else if (value === 'lastName') {
+      this.selectedUsers = this.sortedUsers.sort(this.sortLastName);
+    } else if (value === 'employeeId') {
+      this.selectedUsers = this.sortedUsers.sort(this.sortEmpId);
+    }
+  }
+  sortEmpId(u1: User, u2: User) {
+    if (u1.employeeId < u2.employeeId) {
+      return -1;
+    }
+    if (u1.employeeId > u2.employeeId) {
+      return 1;
+    }
+    return 0;
+  }
+  sortFirstName(u1: User, u2: User) {
+    if (u1.firstName < u2.firstName) {
+      return -1;
+    }
+    if (u1.firstName > u2.firstName) {
+      return 1;
+    }
+    return 0;
+  }
+  sortLastName(u1: User, u2: User) {
+    if (u1.lastName < u2.lastName) {
+      return -1;
+    }
+    if (u1.lastName > u2.lastName) {
+      return 1;
+    }
+    return 0;
   }
 
 

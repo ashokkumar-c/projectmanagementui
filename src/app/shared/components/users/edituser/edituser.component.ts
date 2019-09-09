@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EditUser } from '../../../../core/models/users';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../../../../core/services/users/users.service';
@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 })
 export class EdituserComponent implements OnInit {
 
-  @Input() childEditUser: EditUser;
+  @Input() childEditUserId: string;
+  editUser: EditUser;
 
   constructor(private usersService: UsersService,
               private toastrService: ToastrService,
@@ -20,19 +21,27 @@ export class EdituserComponent implements OnInit {
 
   ngOnInit() {
     console.log('inside edit screen');
-    console.log(this.childEditUser);
-    console.log(this.childEditUser._id);
+    this.usersService.getUser(this.childEditUserId).subscribe(result => {
+      if (result['status'] === 'success') {
+        this.editUser = result['data'][0] as EditUser;
+      }
+    });
   }
 
   updateuser() {
-    console.log(this.childEditUser);
-    this.usersService.updateUser(this.childEditUser).subscribe(result => {
+    this.usersService.updateUser(this.editUser).subscribe(result => {
       console.log(result);
       if (result['status'] === 'success') {
         this.toastrService.success('Success', 'User udpated successfully');
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl('/home', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['/manageusers']));
       }
     });
+  }
+
+  cancelupdate() {
+    this.router.navigateByUrl('/home', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['/manageusers']));
   }
 
 }
