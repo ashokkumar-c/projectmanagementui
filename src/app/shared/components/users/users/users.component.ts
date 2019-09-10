@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   Users: User[];
   selectedUsers: User[];
   selectedUserId: string;
-  searchValue: string;
+  searchUserRequest: string;
   sortedUsers: User[];
   public editUser: EditUser = {
     _id: '',
@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.usersService.getAllUsers().subscribe(result => {
       this.Users = result['data'] as User[];
-      this.selectedUsers = this.Users.sort();
+      this.selectedUsers = this.Users;
     });
     this.editFlag = false;
   }
@@ -53,6 +53,18 @@ export class UsersComponent implements OnInit {
         this.ngOnInit();
       }
     });
+  }
+
+  search() {
+    this.usersService.searchUsers(this.searchUserRequest).subscribe(result => {
+      this.Users = result['data'] as User[];
+      console.log(this.Users);
+      console.log(this.selectedUsers);
+      this.selectedUsers = this.Users;
+      console.log(this.selectedUsers);
+    });
+    this.editFlag = false;
+    this.searchUserRequest = '';
   }
 
   // Sorting functions

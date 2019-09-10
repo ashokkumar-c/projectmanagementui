@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import {map, retry, catchError, tap } from 'rxjs/operators';
-import { AddUser, EditUser, User } from '../../models/users';
+import { AddUser, EditUser, User} from '../../models/users';
 import { AppConstants } from '../../AppConstants';
 
 @Injectable({
@@ -16,6 +16,7 @@ export class UsersService {
     lastName: '',
     employeeId: ''
   };
+
   constructor(private  httpClient: HttpClient) { }
     // Http Options
     httpOptions = {
@@ -32,6 +33,11 @@ export class UsersService {
   getUser(id: string) {
     return this.httpClient.get(AppConstants.baseURL + '/users/' + id);
   }
+
+  searchUsers(searchUserRequest: string) {
+    return this.httpClient.get(AppConstants.baseURL + '/users/search', {params: new HttpParams().set('q', searchUserRequest)});
+  }
+
 
   addUser(user: AddUser): Observable<any> {
     return this.httpClient.post<any>(AppConstants.baseURL + '/users', user, this.httpOptions);
