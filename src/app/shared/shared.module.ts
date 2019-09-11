@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UsersComponent } from './components/users/users/users.component';
@@ -17,7 +17,18 @@ import { EdittaskComponent } from './components/tasks/edittask/edittask.componen
 
 
 @NgModule({
-  declarations: [UsersComponent, HomeComponent, AdduserComponent, EdituserComponent, ProjectsComponent, AddprojectComponent, EditprojectComponent, TasksComponent, AddtaskComponent, EdittaskComponent],
+  declarations: [
+    UsersComponent,
+    HomeComponent,
+    AdduserComponent,
+    EdituserComponent,
+    ProjectsComponent,
+    AddprojectComponent,
+    EditprojectComponent,
+    TasksComponent,
+    AddtaskComponent,
+    EdittaskComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
