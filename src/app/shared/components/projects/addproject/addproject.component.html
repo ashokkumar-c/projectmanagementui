@@ -1,1 +1,53 @@
-<p>addproject works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group row">
+    <label for="project" class="col-sm-2 col-form-label">Project: </label>
+    <div class="col-sm-10">
+      <input type="text" formControlName="project" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && getControls.project.errors }" />
+      <div *ngIf="submitted && getControls.project.errors" class="invalid-feedback">
+        <div *ngIf="getControls.project.errors.required">Project Name is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+        <div class="col-sm-2">&nbsp;</div>
+    <div class="col-sm-2">
+      <label for="setDates" class="form-check-label">Set Start & End Date</label>
+      <input type="checkbox" formControlName="setDates" id="acceptTerms" class="form-check-input" />
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" id="startDate" name="startDate" formControlName="startDate">
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" id="endDate" name="endDate" formControlName="endDate">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="priority" class="col-sm-2 col-form-label">Priority: </label>
+    <div class="col-sm-10">
+      <input type="range" formControlName="priority" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && getControls.priority.errors }" />
+      <div *ngIf="submitted && getControls.priority.errors" class="invalid-feedback">
+        <div *ngIf="getControls.priority.errors.required">Priority is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="manager" class="col-sm-2 col-form-label">Manager</label>
+    <div class="col-sm-10">
+      <input type="text" formControlName="manager" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && getControls.manager.errors }" />
+      <input type="hidden" formControlName="managetId">
+      <div *ngIf="submitted && getControls.manager.errors" class="invalid-feedback">
+        <div *ngIf="getControls.manager.errors.required">Manager is required</div>
+      </div>
+      <button class="btn btn-primary" type="button">Search</button>&nbsp;&nbsp;
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10 text-center">
+      <button class="btn btn-primary" type="submit">Add</button>&nbsp;&nbsp;
+      <button class="btn btn-dark" type="reset" (click)="resetvalues()">Reset</button>
+    </div>
+  </div>
+</form>

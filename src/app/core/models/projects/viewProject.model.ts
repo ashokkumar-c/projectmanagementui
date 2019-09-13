@@ -8,4 +8,5 @@ export interface Project {
     managerId: number;
     isSuspended: boolean;
     _id: string;
+    noOfTasks;
 }
