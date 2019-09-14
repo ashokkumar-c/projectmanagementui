@@ -13,6 +13,7 @@ import { EditprojectComponent } from './components/projects/editproject/editproj
 import { TasksComponent } from './components/tasks/tasks/tasks.component';
 import { AddtaskComponent } from './components/tasks/addtask/addtask.component';
 import { EdittaskComponent } from './components/tasks/edittask/edittask.component';
+import { ManagerSearchModelComponent } from './components/projects/manager-search-model/manager-search-model.component';
 
 
 
@@ -27,7 +28,8 @@ import { EdittaskComponent } from './components/tasks/edittask/edittask.componen
     EditprojectComponent,
     TasksComponent,
     AddtaskComponent,
-    EdittaskComponent
+    EdittaskComponent,
+    ManagerSearchModelComponent
   ],
   imports: [
     CommonModule,

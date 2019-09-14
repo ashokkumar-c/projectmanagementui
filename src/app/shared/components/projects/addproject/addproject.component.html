@@ -33,15 +33,15 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="manager" class="col-sm-2 col-form-label">Manager</label>
+    <label for="managerName" class="col-sm-2 col-form-label">Manager</label>
     <div class="col-sm-10">
-      <input type="text" formControlName="manager" class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && getControls.manager.errors }" />
-      <input type="hidden" formControlName="managetId">
-      <div *ngIf="submitted && getControls.manager.errors" class="invalid-feedback">
-        <div *ngIf="getControls.manager.errors.required">Manager is required</div>
+      <input type="text" formControlName="managerName" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && getControls.managerName.errors }" />
+      <input type="hidden" formControlName="managerId">
+      <div *ngIf="submitted && getControls.managerName.errors" class="invalid-feedback">
+        <div *ngIf="getControls.managerName.errors.required">Manager is required</div>
       </div>
-      <button class="btn btn-primary" type="button">Search</button>&nbsp;&nbsp;
+      <button class="btn btn-primary" (click)="openModal()">Search</button>&nbsp;&nbsp;
     </div>
   </div>
   <div class="form-group row">
@@ -50,4 +50,6 @@
       <button class="btn btn-dark" type="reset" (click)="resetvalues()">Reset</button>
     </div>
   </div>
+  <button class="btn btn-lg btn-outline-primary" (click)="openModal()">Search</button>
+ 
 </form>
