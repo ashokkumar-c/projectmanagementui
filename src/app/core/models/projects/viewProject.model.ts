@@ -6,7 +6,8 @@ export interface Project {
     endDate: Date;
     priority: number;
     managerId: number;
+    managerName: string;
     isSuspended: boolean;
     _id: string;
-    noOfTasks;
+    noOfTasks: number;
 }

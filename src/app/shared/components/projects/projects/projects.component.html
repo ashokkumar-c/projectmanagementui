@@ -5,13 +5,13 @@
     <div *ngIf="!editFlag; else editProject">
       <app-addproject></app-addproject>
     </div>
-    <ng-template #editUser>
-      <!--<app-editproject [childEditProjectId]='selectedProjectId'></app-editproject>-->
+    <ng-template #editProject>
+      <app-editproject [childEditProjectId]='selectedProjectId'></app-editproject>
     </ng-template>
     <hr>
     <div class="row" style="float:right">
-      <input type="text" placeholder="Search..." [(ngModel)]="searchProjectRequest"> &nbsp; <button class="btn btn-primary mr-3"
-        (click)="search()">Search</button> &nbsp;
+      <input type="text" placeholder="Search..." [(ngModel)]="searchProjectRequest"> &nbsp; <button
+        class="btn btn-primary mr-3" (click)="search()">Search</button> &nbsp;
       <span class="ml-5 mr-2">Sort: </span>
       <button class="btn btn-primary mr-3" (click)="sortBy('startDate')">Start Date</button>
       <button class="btn btn-primary mr-3" (click)="sortBy('endDate')">End Date</button>
@@ -19,7 +19,7 @@
       <button class="btn btn-primary mr-3" (click)="sortBy('isSuspended')">Completed</button>
     </div>
     <div class="row">&nbsp;</div>
-<br>    
+    <br>
     <table class="table table-responsive">
       <thead>
         <tr>
@@ -34,12 +34,17 @@
       <tbody>
         <tr *ngFor="let project of Projects">
           <td>{{ project.projectName }}</td>
-          <td>{{ project.startDate}}</td>
-          <td>{{ project.endDate}}</td>
-          <td>{{ project.noOfTasks}}</td>          
-          <td *ngIf="project.isSuspended!=='true'; else projCompleted"> 
-            <button class="btn btn-primary" (click)="editSelectedProject(project.projectId)">Update Project</button>&nbsp;
-          <button class="btn btn-" (click)="deleteProject(project.projectId)">Suspend</button></td>
+          <td>{{ project.startDate.substring(0,10)}}</td>
+          <td>{{ project.endDate.substring(0,10)}}</td>
+          <td>{{ project.priority}}</td>
+          <td>{{ project.noOfTasks}}</td>
+          <td *ngIf="!project.isSuspended; else projCompleted">
+              <button class="btn btn-primary" (click)="editSelectedProject(project.projectId)">Update</button>&nbsp;
+              <button class="btn btn-danger" (click)="deleteProject(project.projectId)">Suspend</button>
+            </td>
+            <ng-template #projCompleted>
+              <td>Project Completed</td>
+            </ng-template>         
         </tr>
       </tbody>
     </table>

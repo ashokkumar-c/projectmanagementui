@@ -6,6 +6,5 @@ export interface EditProject {
     endDate: Date;
     priority: number;
     managerId: number;
-    isSuspended: boolean;
-    _id: string;
+    managerName: string;
 }

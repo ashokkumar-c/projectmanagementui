@@ -5,5 +5,7 @@ export interface AddProject {
     endDate: Date;
     priority: number;
     managerId: number;
+    managerName: string;
     isSuspended: boolean;
+    noOfTasks: number;
 }

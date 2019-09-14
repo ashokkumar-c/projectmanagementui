@@ -1,5 +1,5 @@
-import { Component, OnInit, NgModule  } from '@angular/core';
-import { AddUser } from '../../../../core/models/users/addUser.model';
+import { Component, OnInit, NgModule } from '@angular/core';
+import { AddProject } from '../../../../core/models/projects/addProject.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MustMatch } from '../../../../core/helper/must-match.validator';
@@ -7,6 +7,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ManagerSearchModelComponent } from '../manager-search-model/manager-search-model.component';
 import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
+import { Manager } from '../../../../core/models/users/manager.model';
+import { ProjectsService } from '../../../../core/services/projects/projects.service';
+
 
 @Component({
   selector: 'app-addproject',
@@ -15,19 +18,42 @@ import { BrowserModule } from '@angular/platform-browser';
 })
 export class AddprojectComponent implements OnInit {
 
-  closeResult: string;
-  modalOptions: NgbModalOptions;
-
-  public user = {
-    name: 'ashok',
-    id: '21'
+  manager: Manager = {
+    managerId: '',
+    managerName: ''
   };
+  newAddProject: AddProject = {
+    projectName: '',
+    managerId: 0,
+    managerName: '',
+    setDates: false,
+    startDate: null,
+    endDate: null,
+    isSuspended: false,
+    priority: 0,
+    noOfTasks: 0
+  };
+  tempNewAddProject: AddProject = {
+    projectName: '',
+    managerId: 0,
+    managerName: '',
+    setDates: false,
+    startDate: null,
+    endDate: null,
+    isSuspended: false,
+    priority: 0,
+    noOfTasks: 0
+  };
+
+  modalOptions: NgbModalOptions;
+  submitted = false;
   registerForm: FormGroup;
   constructor(
     private modalService: NgbModal,
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastrService: ToastrService) {
+    private toastrService: ToastrService,
+    private projectService: ProjectsService) {
     this.modalOptions = {
       backdrop: 'static',
       backdropClass: 'customBackdrop'
@@ -36,7 +62,7 @@ export class AddprojectComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      project: ['', Validators.required],
+      projectName: ['', Validators.required],
       setDates: [''],
       startDate: [''],
       endDate: [''],
@@ -49,45 +75,51 @@ export class AddprojectComponent implements OnInit {
   get getControls() {
     return this.registerForm.controls;
   }
+
   openModal() {
+    this.tempNewAddProject = this.registerForm.value as AddProject;
     const modalRef = this.modalService.open(ManagerSearchModelComponent);
-    modalRef.componentInstance.user = this.user;
     modalRef.result.then((result) => {
       if (result) {
-        console.log(result);
+        this.manager = result as Manager;
+        this.registerForm.patchValue({
+          managerName: this.manager.managerName,
+          managerId: this.manager.managerId,
+          projectName: this.tempNewAddProject.projectName,
+          setDates: this.tempNewAddProject.setDates,
+          startDate: this.tempNewAddProject.startDate,
+          endDate: this.tempNewAddProject.endDate,
+          priority: this.tempNewAddProject.priority
+        });
       }
     });
     modalRef.componentInstance.emitService.subscribe((emmitedValue) => {
-      console.log('inside emitted value');
       console.log(emmitedValue);
-  });
+    });
     modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
       console.log(receivedEntry);
     });
-
-  }
-
-  open() {
-    const modalRef = this.modalService.open(ManagerSearchModelComponent);
-    modalRef.componentInstance.my_modal_title = 'I your title';
-    modalRef.componentInstance.my_modal_content = 'I am your content';
-    modalRef.componentInstance.emitService.subscribe((emmitedValue) => {
-      console.log('inside emitted value');
-      console.log(emmitedValue);
-  });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   onSubmit() {
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+    } else {
+      this.newAddProject = this.registerForm.value as AddProject; // : AddUser
+      this.projectService.addProject(this.newAddProject).subscribe(result => {
+        if (result.status === 'success') {
+          this.toastrService.success('Success', 'Proejct created successfully');
+          this.router.navigateByUrl('/home', { skipLocationChange: true }).then(() =>
+            this.router.navigate(['/projects']));
+        }
+      });
+    }
 
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.registerForm.reset();
   }
 }
