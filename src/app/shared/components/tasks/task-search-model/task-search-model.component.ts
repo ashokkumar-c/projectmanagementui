@@ -37,7 +37,7 @@ export class TaskSearchModelComponent implements OnInit {
   }
 
   close() {
-    this.activeModalService.close();
+    this.activeModalService.close(this.parentTask);
   }
 
   search() {

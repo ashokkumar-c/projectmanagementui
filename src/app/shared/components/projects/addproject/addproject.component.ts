@@ -9,6 +9,7 @@ import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng
 import { BrowserModule } from '@angular/platform-browser';
 import { Manager } from '../../../../core/models/users/manager.model';
 import { ProjectsService } from '../../../../core/services/projects/projects.service';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -64,8 +65,8 @@ export class AddprojectComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       projectName: ['', Validators.required],
       setDates: [''],
-      startDate: [''],
-      endDate: [''],
+      startDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
+      endDate: formatDate(new Date().setDate(new Date().getDate() + 1 ), 'yyyy-MM-dd', 'en-US'),
       priority: ['', Validators.required],
       managerName: ['', Validators.required],
       managerId: ['', Validators.required]

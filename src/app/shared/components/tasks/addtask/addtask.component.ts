@@ -9,6 +9,7 @@ import { TasksService } from '../../../../core/services/tasks/tasks.service';
 import { ProjectSearchModelComponent } from '../project-search-model/project-search-model.component';
 import { TaskSearchModelComponent } from '../task-search-model/task-search-model.component';
 import { UserSearchModelComponent } from '../user-search-model/user-search-model.component';
+import { DatePipe, formatDate } from '@angular/common';
 
 
 
@@ -88,12 +89,29 @@ export class AddtaskComponent implements OnInit {
       priority: [''],
       parentTaskId: [''],
       parentTaskName: [''],
-      startDate: [''],
-      endDate: [''],
+      startDate: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), Validators.required],
+      endDate: [formatDate(new Date().setDate(new Date().getDate() + 1 ), 'yyyy-MM-dd', 'en-US'), Validators.required],
       userName: [''],
       userId: ['']
-    });
+    }, {validator: this.dateLessThan('startDate', 'endDate')});
+
+    this.onFormChanges();
   }
+
+  onFormChanges() {
+    this.registerForm.get('isParentTask').valueChanges
+    .subscribe(checked => {
+        if (checked === true) {
+            this.registerForm.get('priority').disable();
+            this.registerForm.get('startDate').disable();
+            this.registerForm.get('endDate').disable();
+        } else {
+          this.registerForm.get('priority').enable();
+          this.registerForm.get('startDate').enable();
+          this.registerForm.get('endDate').enable();
+        }
+    });
+}
 
   get getControls() {
     return this.registerForm.controls;
@@ -220,4 +238,16 @@ export class AddtaskComponent implements OnInit {
     this.registerForm.reset();
   }
 
+  dateLessThan(from: string, to: string) {
+    return (group: FormGroup): {[key: string]: any} => {
+      const f = group.controls[from];
+      const t = group.controls[to];
+      if (f.value > t.value) {
+        return {
+          dates: 'Date from should be less than Date to'
+        };
+      }
+      return {};
+    };
+  }
 }

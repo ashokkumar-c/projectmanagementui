@@ -10,7 +10,7 @@ import { ProjectSearchModelComponent } from '../project-search-model/project-sea
 import { TaskSearchModelComponent } from '../task-search-model/task-search-model.component';
 import { UserSearchModelComponent } from '../user-search-model/user-search-model.component';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-edittask',
@@ -93,8 +93,8 @@ export class EdittaskComponent implements OnInit {
       priority: [''],
       parentTaskId: [''],
       parentTaskName: [''],
-      startDate: [''],
-      endDate: [''],
+      startDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
+      endDate: formatDate(new Date().setDate(new Date().getDate() + 1), 'yyyy-MM-dd', 'en-US'),
       userName: [''],
       userId: ['']
     });
@@ -112,14 +112,36 @@ export class EdittaskComponent implements OnInit {
           priority: this.editTask.priority,
           parentTaskId: this.editTask.parentTaskId,
           parentTaskName: this.editTask.parentTaskName,
-          startDate:  this.datePipe.transform(this.editTask.startDate, 'yyyy-MM-dd'),
+          startDate: this.datePipe.transform(this.editTask.startDate, 'yyyy-MM-dd'),
           endDate: this.datePipe.transform(this.editTask.endDate, 'yyyy-MM-dd'),
           userId: this.editTask.userId,
           userName: this.editTask.userName
         });
+        if (this.registerForm.get('isParentTask').value === true) {
+          this.registerForm.get('isParentTask').disable();
+        }
       }
     });
 
+    this.onFormChanges();
+    if (this.editTask.isParentTask) {
+      this.disableControl = true;
+    }
+  }
+
+  onFormChanges() {
+    this.registerForm.get('isParentTask').valueChanges
+      .subscribe(checked => {
+        if (checked === true) {
+          this.registerForm.get('priority').disable();
+          this.registerForm.get('startDate').disable();
+          this.registerForm.get('endDate').disable();
+        } else {
+          this.registerForm.get('priority').enable();
+          this.registerForm.get('startDate').enable();
+          this.registerForm.get('endDate').enable();
+        }
+      });
   }
 
   get getControls() {
@@ -248,7 +270,7 @@ export class EdittaskComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.router.navigateByUrl('/home', { skipLocationChange: true }).then(() =>
-    this.router.navigate(['/tasks']));
+      this.router.navigate(['/tasks']));
   }
 
 }
