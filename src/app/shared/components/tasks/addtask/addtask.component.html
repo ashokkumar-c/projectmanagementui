@@ -1,1 +1,93 @@
-<p>addtask works!</p>
+<br>
+<div class='card'>
+  <div class="card-header bg-primary">Add Task</div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label for="projectName" class="col-sm-2 col-form-label">Project: </label>
+        <div class="col-sm-10 row">
+          <div class='col-sm-10'>
+            <input type="text" formControlName="projectName" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && getControls.projectName.errors }" disabled/>
+            <input type="hidden" formControlName="projectId">
+            <div *ngIf="submitted && getControls.projectName.errors" class="invalid-feedback">
+              <div *ngIf="getControls.projectName.errors.required">Project is required</div>
+            </div>
+          </div>
+          <div class='col-sm-2'>
+            <button type="reset" class="btn btn-primary" (click)="openTaskProjectModal()">Search</button></div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="taskName" class="col-sm-2 col-form-label">Task Name: </label>
+        <div class="col-sm-8">
+          <input type="text" formControlName="taskName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && getControls.taskName.errors }" />
+          <div *ngIf="submitted && getControls.taskName.errors" class="invalid-feedback">
+            <div *ngIf="getControls.taskName.errors.required">Task Name is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3">&nbsp;</div>
+        <div class="col-sm-9 row">
+          <label for="isParentTask" class="form-check-label">Is Parent Task?</label>
+          <input type="checkbox" formControlName="isParentTask" id="isParentTask" class="form-check-input" (change) = "onChange($event)"/>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="priority" class="col-sm-2 col-form-label">Priority: </label>
+        <div class="col-sm-3">
+          <input type="range" formControlName="priority" class="form-control" min="0" max="30"/>
+        </div>
+      </div>
+      <div class="form-group row">
+          <label for="parentTaskName" class="col-sm-2 col-form-label">Parent Task: </label>
+          <div class="col-sm-10 row">
+            <div class='col-sm-10'>
+              <input type="text" formControlName="parentTaskName" class="form-control" />
+              <input type="hidden" formControlName="parentTaskId">
+            </div>
+            <div class='col-sm-2'>
+              <button type="reset" class="btn btn-primary" (click)="openParentTaskModal()" >Search</button></div>
+          </div>
+        </div>
+      <div class="form-group row">
+        <div class="col-sm-2">&nbsp;</div>
+        <div class="col-sm-4 row">
+          <div class="col-sm-4">
+            <label for="startDate" class="form-check-label">Start Date</label>
+          </div>
+          <div class="col-sm-8">
+            <input type="date" class="form-control" id="startDate" name="startDate" formControlName="startDate" >
+          </div>
+        </div>
+        <div class="col-sm-4 row">
+          <div class="col-sm-4"><label for="endDate" class="form-check-label">End Date</label></div>
+          <div class="col-sm-8"><input type="date" class="form-control" id="endDate" name="endDate"
+              formControlName="endDate" ></div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="userName" class="col-sm-2 col-form-label">User: </label>
+        <div class="col-sm-10 row">
+          <div class='col-sm-10'>
+            <input type="text" formControlName="userName" class="form-control"/>
+            <input type="hidden" formControlName="userId">            
+          </div>
+          <div class='col-sm-2'>
+            <button type="reset" class="btn btn-primary" (click)="openTaskUserModal()">Search</button></div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10 text-center">
+          <button class="btn btn-primary" type="submit">Add Task</button>&nbsp;&nbsp;
+          <button class="btn btn-dark" type="reset" (click)="onReset()">Reset</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="card-footer bg-primary"></div>
+</div>

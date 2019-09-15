@@ -33,8 +33,7 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
 
     this.projectsService.getAllProjects().subscribe(result => {
-      this.Projects = result['data'] as Project[];
-      this.selectedProjects = this.Projects;
+      this.Projects = result['data'] as Project[];     
     });
     this.editFlag = false;
   }
@@ -42,7 +41,6 @@ export class ProjectsComponent implements OnInit {
   search() {
       this.projectsService.searchProjects(this.searchProjectRequest).subscribe(result => {
       this.Projects = result['data'] as Project[];
-      //this.selectedProjects = this.Projects;
     });
       this.editFlag = false;
       this.searchProjectRequest = '';

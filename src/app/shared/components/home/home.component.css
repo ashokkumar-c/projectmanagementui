@@ -1,0 +1,17 @@
+.jumbotron{
+    border-radius:0px!important;
+    box-shadow:1px 1px 4px rgba(0,0,0,0.4);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;    
+    position: relative;
+    height: 100%;
+
+
+}
+
+.jumbotron .btn{
+    border-radius:0px!important;
+    box-shadow:1px 1px 4px rgba(0,0,0,0.4);
+    padding:10px 40px;
+}

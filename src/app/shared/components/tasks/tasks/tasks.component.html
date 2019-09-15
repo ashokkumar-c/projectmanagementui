@@ -1,1 +1,47 @@
-<p>tasks works!</p>
+&nbsp;
+<div class='card'>
+  <div class="card-header bg-primary">View Project Tasks</div>
+  <div class="card-body">
+    <div class="row">
+     <label class="col-sm-2 col-form-label">Project: </label>
+      <input type="text" placeholder="Search..." [(ngModel)]="searchProjectRequest" id="projectTextbox" disabled> &nbsp; 
+      <button class="btn btn-primary mr-3" (click)="openTaskProjectModal()">Search</button> &nbsp;
+      <span class="ml-5 mr-2">Sort:&nbsp; &nbsp; </span>
+      <button class="btn btn-primary mr-3" (click)="sortBy('startDate')">Start Date</button>
+      <button class="btn btn-primary mr-3" (click)="sortBy('endDate')">End Date</button>
+      <button class="btn btn-primary mr-3" (click)="sortBy('Priority')">Priority</button>
+      <button class="btn btn-primary mr-3" (click)="sortBy('isCompleted')">Completed</button>
+    </div>
+    <div class="row">&nbsp;</div>
+    <br>
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Parent</th>
+          <th>Priority</th>
+          <th>Start Date</th>
+          <th>End Date</th>          
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of Tasks">
+          <td>{{ task.taskName }}</td>
+          <td>{{ task.parentTaskName ? task.parentTaskName : '-' }}</td>
+          <td>{{ task.priority? task.priority : '-'}}</td>
+          <td>{{ task.startDate? task.startDate.substring(0,10) : '-'}}</td>
+          <td>{{ task.endDate ? task.endDate.substring(0,10) : '-'}}</td>         
+          <td *ngIf="!task.isCompleted; else taskCompleted">
+              <button class="btn btn-primary" [routerLink]="['/tasks/edit/', task.taskId]">Update</button>&nbsp;
+              <button class="btn btn-danger" (click)="endTask(task.taskId)">End Task</button>
+            </td>
+            <ng-template #taskCompleted>
+              <td>Task Completed</td>
+            </ng-template>         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer bg-primary"></div>
+</div>

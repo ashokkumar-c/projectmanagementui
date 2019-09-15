@@ -14,6 +14,9 @@ import { TasksComponent } from './components/tasks/tasks/tasks.component';
 import { AddtaskComponent } from './components/tasks/addtask/addtask.component';
 import { EdittaskComponent } from './components/tasks/edittask/edittask.component';
 import { ManagerSearchModelComponent } from './components/projects/manager-search-model/manager-search-model.component';
+import { UserSearchModelComponent } from './components/tasks/user-search-model/user-search-model.component';
+import { ProjectSearchModelComponent } from './components/tasks/project-search-model/project-search-model.component';
+import { TaskSearchModelComponent } from './components/tasks/task-search-model/task-search-model.component';
 
 
 
@@ -29,7 +32,10 @@ import { ManagerSearchModelComponent } from './components/projects/manager-searc
     TasksComponent,
     AddtaskComponent,
     EdittaskComponent,
-    ManagerSearchModelComponent
+    ManagerSearchModelComponent,
+    UserSearchModelComponent,
+    ProjectSearchModelComponent,
+    TaskSearchModelComponent
   ],
   imports: [
     CommonModule,

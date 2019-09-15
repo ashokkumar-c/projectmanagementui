@@ -8,6 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ManagerSearchModelComponent } from './shared/components/projects/manager-search-model/manager-search-model.component';
+import { ProjectSearchModelComponent } from './shared/components/tasks/project-search-model/project-search-model.component';
+import { TaskSearchModelComponent } from './shared/components/tasks/task-search-model/task-search-model.component';
+import { UserSearchModelComponent } from './shared/components/tasks/user-search-model/user-search-model.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { ManagerSearchModelComponent } from './shared/components/projects/manage
     NgbModule
   ],
   entryComponents: [
-ManagerSearchModelComponent
+    ManagerSearchModelComponent,
+    ProjectSearchModelComponent,
+    TaskSearchModelComponent,
+    UserSearchModelComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
