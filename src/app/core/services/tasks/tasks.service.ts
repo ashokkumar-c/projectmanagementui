@@ -12,7 +12,7 @@ export class TasksService {
 
   newAddTask: AddTask = {
     taskName: '',
-    taskId: null,
+    projectId: null,
     projectName: '',
     isParentTask: false,
     priority: null,
@@ -45,7 +45,7 @@ export class TasksService {
     return this.httpClient.get(AppConstants.baseURL + '/tasks/' + projectId + '/tasks'  );
   }
 
-  getParentTasksBytaskId(projectId: string, searchText: string) {
+  getParentTasksByProjectId(projectId: string, searchText: string) {
     return this.httpClient.get(AppConstants.baseURL + '/tasks/' + projectId + '/parenttasks',
                                 { params: new HttpParams().set('q', searchText) } );
   }

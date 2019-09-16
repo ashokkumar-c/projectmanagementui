@@ -32,20 +32,8 @@ export class ManagerSearchModelComponent implements OnInit {
     public activeModalService: NgbActiveModal) { }
 
   ngOnInit() {
-    // console.log(this.user);
-    // this.usersService.getAllUsers().subscribe(result => {
-    //   this.Users = result['data'] as User[];
-    // });
-    // this.registerForm = this.formBuilder.group({
-    //   managerName: [{value: '', disabled: true}, Validators.required],
-    //   managerId: ['', Validators.required],
-    //   searchText: ['']
-    // });
   }
 
-  // get getControls() {
-  //   return this.registerForm.controls;
-  // }
   passBack() {
     // this.passEntry.emit(this.user);
     this.activeModalService.close(this.manager);

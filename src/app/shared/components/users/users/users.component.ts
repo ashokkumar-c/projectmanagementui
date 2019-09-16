@@ -37,8 +37,7 @@ export class UsersComponent implements OnInit {
 
   editSelectedUser(id: string) {
     this.selectedUserId = id;
-    this.usersService.getUser(this.selectedUserId).subscribe(result => {
-      console.log(result);
+    this.usersService.getUser(this.selectedUserId).subscribe(result => {      
       if (result['status'] === 'success') {
         this.editUser = result['data'][0] as EditUser;
       }
@@ -46,8 +45,7 @@ export class UsersComponent implements OnInit {
     this.editFlag = true;
   }
   deleteUser(id: string) {
-    this.usersService.deleteUser(id).subscribe(result => {
-      console.log(result);
+    this.usersService.deleteUser(id).subscribe(result => {      
       if (result.status === 'success') {
         this.toastrService.success('Success', 'User deleted successfully.');
         this.ngOnInit();
@@ -58,10 +56,7 @@ export class UsersComponent implements OnInit {
   search() {
     this.usersService.searchUsers(this.searchUserRequest).subscribe(result => {
       this.Users = result['data'] as User[];
-      console.log(this.Users);
-      console.log(this.selectedUsers);
       this.selectedUsers = this.Users;
-      console.log(this.selectedUsers);
     });
     this.editFlag = false;
     this.searchUserRequest = '';

@@ -47,12 +47,10 @@ export class AdduserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(JSON.stringify(this.registerForm.value));
     if (this.registerForm.invalid) {
       return;
     } else {
       this.newAddUser = this.registerForm.value as AddUser; // : AddUser
-      console.log(this.newAddUser);
       this.usersService.addUser(this.newAddUser).subscribe(result => {
         if (result.status === 'success') {
             this.toastrService.success('Success', 'User created successfully');

@@ -42,7 +42,6 @@ export class TaskSearchModelComponent implements OnInit {
 
   search() {
     this.tasksService.getParentTasksByProjectId(this.projectId, this.searchText).subscribe(result => {
-      console.log(result);
       this.Tasks = result['data'] as Task[];
     });
   }

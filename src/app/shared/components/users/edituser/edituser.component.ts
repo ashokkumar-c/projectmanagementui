@@ -60,8 +60,7 @@ export class EdituserComponent implements OnInit {
       return;
     } else {
       this.editUser = this.registerForm.value as EditUser;
-      this.usersService.updateUser(this.editUser).subscribe(result => {
-        console.log(result);
+      this.usersService.updateUser(this.editUser).subscribe(result => {        
         if (result['status'] === 'success') {
           this.toastrService.success('Success', 'User udpated successfully');
           this.router.navigateByUrl('/home', {skipLocationChange: true}).then(() =>

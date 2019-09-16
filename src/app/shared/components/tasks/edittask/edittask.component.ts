@@ -102,7 +102,6 @@ export class EdittaskComponent implements OnInit {
     this.tasksService.getTask(this.activatedRoute.snapshot.params['id']).subscribe(result => {
       if (result['status'] === 'success') {
         this.editTask = result['data'][0] as EditTask;
-        console.log(this.editTask);
         this.registerForm.setValue({
           taskId: this.editTask.taskId,
           taskName: this.editTask.taskName,
@@ -218,8 +217,7 @@ export class EdittaskComponent implements OnInit {
 
   openParentTaskModal() {
     this.tempEditTask = this.registerForm.value as EditTask;
-    const modalRef = this.modalService.open(TaskSearchModelComponent);
-    console.log(this.taskProject.taskProjectId);
+    const modalRef = this.modalService.open(TaskSearchModelComponent);    
     modalRef.componentInstance.projectId = this.taskProject.taskProjectId;
     modalRef.result.then((result) => {
       if (result) {
@@ -253,9 +251,7 @@ export class EdittaskComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     } else {
-      this.editTask = this.registerForm.value as EditTask; // : AddTask
-      console.log(this.registerForm.value);
-      console.log(this.editTask);
+      this.editTask = this.registerForm.value as EditTask; // : AddTask      
       this.tasksService.updateTask(this.editTask).subscribe(result => {
         if (result.status === 'success') {
           this.toastrService.success('Success', 'Task created successfully');

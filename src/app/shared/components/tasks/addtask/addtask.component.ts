@@ -185,8 +185,7 @@ export class AddtaskComponent implements OnInit {
 
   openParentTaskModal() {
     this.tempNewAddTask = this.registerForm.value as AddTask;
-    const modalRef = this.modalService.open(TaskSearchModelComponent);
-    console.log(this.taskProject.taskProjectId);
+    const modalRef = this.modalService.open(TaskSearchModelComponent);    
     modalRef.componentInstance.projectId = this.taskProject.taskProjectId;
     modalRef.result.then((result) => {
       if (result) {
@@ -220,8 +219,6 @@ export class AddtaskComponent implements OnInit {
       return;
     } else {
       this.newTask = this.registerForm.value as AddTask; // : AddTask
-      console.log(this.registerForm.value );
-      console.log(this.newTask);
       this.tasksService.addTask(this.newTask).subscribe(result => {
         if (result.status === 'success') {
           this.toastrService.success('Success', 'Task created successfully');

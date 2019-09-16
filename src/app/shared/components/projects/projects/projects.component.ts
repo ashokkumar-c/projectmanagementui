@@ -49,7 +49,6 @@ export class ProjectsComponent implements OnInit {
   editSelectedProject(id: string) {
     this.selectedProjectId = id;
     this.projectsService.getProject(this.selectedProjectId).subscribe(result => {
-      console.log(result);
       if (result['status'] === 'success') {
         this.editProject = result['data'][0] as EditProject;
       }
@@ -64,8 +63,7 @@ export class ProjectsComponent implements OnInit {
       isSuspended: true,
       projectId: id,
       endDate: new Date()
-    };
-    console.log(suspendProject);
+    };    
     this.projectsService.updateProject(suspendProject).subscribe(result => {
       if (result['status'] === 'success') {
         this.ngOnInit();
